@@ -1,0 +1,134 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Bucket
+   uuid = "6B4F1B0E-4236-4A5A-996C-E99A3D4CE644"
+   type = "1"
+   version = "2.0">
+   <Breakpoints>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "B44D9B0E-B5B8-4DAB-A221-6483E86F6E91"
+            shouldBeEnabled = "No"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "gitHubRecrutationChallengeTry2/Model/DataLoadOperation.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "14"
+            endingLineNumber = "14"
+            landmarkName = "DataLoadOperation"
+            landmarkType = "3">
+            <Locations>
+               <Location
+                  uuid = "B44D9B0E-B5B8-4DAB-A221-6483E86F6E91 - 85554ce4f219786e"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "gitHubRecrutationChallengeTry2.DataLoadOperation.image.getter : Swift.Optional&lt;__C.UIImage&gt;"
+                  moduleName = "gitHubRecrutationChallengeTry2"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/tomaszkubiak/Documents/iOS%20Portfolio/gitHubRecrutationChallengeTry2/gitHubRecrutationChallengeTry2/Model/DataLoadOperation.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "15"
+                  endingLineNumber = "15"
+                  offsetFromSymbolStart = "88">
+               </Location>
+               <Location
+                  uuid = "B44D9B0E-B5B8-4DAB-A221-6483E86F6E91 - 3b4790b82a33d472"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "gitHubRecrutationChallengeTry2.DataLoadOperation.image.setter : Swift.Optional&lt;__C.UIImage&gt;"
+                  moduleName = "gitHubRecrutationChallengeTry2"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/tomaszkubiak/Documents/iOS%20Portfolio/gitHubRecrutationChallengeTry2/gitHubRecrutationChallengeTry2/Model/DataLoadOperation.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "15"
+                  endingLineNumber = "15"
+                  offsetFromSymbolStart = "108">
+               </Location>
+               <Location
+                  uuid = "B44D9B0E-B5B8-4DAB-A221-6483E86F6E91 - 20d39d6876d7d163"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "gitHubRecrutationChallengeTry2.DataLoadOperation.image.modify : Swift.Optional&lt;__C.UIImage&gt;"
+                  moduleName = "gitHubRecrutationChallengeTry2"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/tomaszkubiak/Documents/iOS%20Portfolio/gitHubRecrutationChallengeTry2/gitHubRecrutationChallengeTry2/Model/DataLoadOperation.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "15"
+                  endingLineNumber = "15"
+                  offsetFromSymbolStart = "0">
+               </Location>
+               <Location
+                  uuid = "B44D9B0E-B5B8-4DAB-A221-6483E86F6E91 - 7c33fa38402c58af"
+                  shouldBeEnabled = "Yes"
+                  ignoreCount = "0"
+                  continueAfterRunningActions = "No"
+                  symbolName = "gitHubRecrutationChallengeTry2.DataLoadOperation.image.modify : Swift.Optional&lt;__C.UIImage&gt; with unmangled suffix &quot;.resume.0&quot;"
+                  moduleName = "gitHubRecrutationChallengeTry2"
+                  usesParentBreakpointCondition = "Yes"
+                  urlString = "file:///Users/tomaszkubiak/Documents/iOS%20Portfolio/gitHubRecrutationChallengeTry2/gitHubRecrutationChallengeTry2/Model/DataLoadOperation.swift"
+                  startingColumnNumber = "9223372036854775807"
+                  endingColumnNumber = "9223372036854775807"
+                  startingLineNumber = "15"
+                  endingLineNumber = "15"
+                  offsetFromSymbolStart = "16">
+               </Location>
+            </Locations>
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "9A3EECE4-F693-4654-A3C1-EB972E3D5BDC"
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "gitHubRecrutationChallengeTry2/ViewController.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "46"
+            endingLineNumber = "46"
+            landmarkName = "loadMoreUsers()"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "61E55C51-F785-413D-B52A-9212B4739D2F"
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "gitHubRecrutationChallengeTry2/ViewController.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "23"
+            endingLineNumber = "23"
+            landmarkName = "ViewController"
+            landmarkType = "3">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            uuid = "16D618C6-591C-4C98-AA0B-B34DC21936DF"
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "gitHubRecrutationChallengeTry2/ViewController.swift"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "42"
+            endingLineNumber = "42"
+            landmarkName = "loadMoreUsers()"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+   </Breakpoints>
+</Bucket>

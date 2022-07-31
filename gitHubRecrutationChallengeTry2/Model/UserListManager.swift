@@ -10,12 +10,24 @@ protocol UserDataManagerDelegate {
     func didUpdateUsers(_ userListManager: UserListManager, users: [UserModel])
     func didFailWithErrors(error: Error)
 }
+
+// this have to have point of synchronisation implementation
+//what to do with extra users that are dupes since new user was done?
+// Filer the users and check if someone already is on a already retrieved list?
+// use dictionary for the users with usernames?
+
+
 struct UserListManager {
     
-    
     var delegate: UserDataManagerDelegate?
+    enum state {
+        case working
+        case free
+    }
+        
+    var busyState: state = .free
     
-    let userDatabaseURL = "https://api.github.com/"//search/" //search/users?q=mike+in:name+created%3A%3C2011-01-01+type%3Auser&type=Users"
+    let userDatabaseURL = "https://api.github.com/"
     let userDatabasePathURL = "search/users"
     let query = "?q="
     let parameters = "+in:login+type%3Auser&type=Users"
@@ -36,7 +48,7 @@ struct UserListManager {
                 urlString.append(String(perPage))
 //            }
         }
-        urlString
+        
         print(urlString)
         performRequest(with: urlString)
     }
@@ -45,24 +57,31 @@ struct UserListManager {
             let session = URLSession(configuration: .default)
             let task = session.dataTask(with: url) {
                 (data, response, error) in
+
+                if let response = response as? HTTPURLResponse {
+                    print(response.statusCode)
+                }
                 if error != nil {
                     self.delegate?.didFailWithErrors(error: error!)
+//                    busyState = .free
                     return
                 }
                 if let safeData = data {
-                    if let userData = self.parseJson(safeData){
+                    if let userData = self.parseJSONtoUserModel(safeData){
                         self.delegate?.didUpdateUsers(self, users: userData)
+//                        busyState = .free
                     }
                 }
             }
             task.resume()
+//            busyState = .working
             
         } else {
             fatalError("URL failed to start task")
         }
     }
     
-    func parseJson(_ data: Data) -> [UserModel]? {
+    func parseJSONtoUserModel(_ data: Data) -> [UserModel]? {
         let decoder = JSONDecoder()
         decoder.keyDecodingStrategy = .convertFromSnakeCase
         do {
@@ -77,18 +96,9 @@ struct UserListManager {
             var userModels: [UserModel] = []
             for i in 0...items.count-1 {
                 let user = items[i]
-                userModels.append(UserModel(userName: user.login, avatarUrl: user.avatarUrl, imageModel: ImageModel(url: user.avatarUrl)))
-                    
+                userModels.append(UserModel(userName: user.login, avatarUrl: user.avatarUrl))
             }
-            
             return userModels
-//            if let firstItem = items.first {
-//                return UserModel(userName: firstItem.login, avatarUrl: firstItem.avatar_url)
-//            } else {
-//                return nil
-//            }
-            
-            
         } catch {
             delegate?.didFailWithErrors(error: error)
             return nil

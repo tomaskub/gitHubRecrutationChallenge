@@ -12,7 +12,7 @@ class ViewController: UIViewController {
     
     @IBOutlet weak var searchBar: UISearchBar!
     @IBOutlet weak var tableView: UITableView!
-    @IBOutlet weak var favoritesButton: UIButton!
+    
     
     let localRealm = try! Realm()
     
@@ -33,27 +33,28 @@ class ViewController: UIViewController {
         tableView.delegate = self
         tableView.dataSource = self
         tableView.prefetchDataSource = self
+        title = "Search Github for users"
     }
     
     
-    @IBAction func favoritesButtonTapped(_ sender: Any) {
-        favoritesButton.setTitle("Favourite Users", for: .normal)
-        retrievedUsers = []
-        dataStore = ImageDataStore()
-        loadingQueue = OperationQueue()
-        loadingOperations = [:]
-        let array = Array(localRealm.objects(RealmUserModel.self).sorted(byKeyPath: "userName", ascending: true))
-        var users: [UserModel] = []
-        
-        for item in array {
-            let user = UserModel(userName: item.userName, avatarUrl: item.avatarUrl, imageModel: ImageModel(url: item.avatarUrl))
-            users.append(user)
-        }
-        
-        retrievedUsers.append(contentsOf: users)
-        dataStore.appendUsers(userModels: users)
-        tableView.reloadData()
-    }
+//    @IBAction func favoritesButtonTapped(_ sender: Any) {
+//        favoritesButton.setTitle("Favourite Users", for: .normal)
+//        retrievedUsers = []
+//        dataStore = ImageDataStore()
+//        loadingQueue = OperationQueue()
+//        loadingOperations = [:]
+//        let array = Array(localRealm.objects(RealmUserModel.self).sorted(byKeyPath: "userName", ascending: true))
+//        var users: [UserModel] = []
+//
+//        for item in array {
+//            let user = UserModel(userName: item.userName, avatarUrl: item.avatarUrl, imageModel: ImageModel(url: item.avatarUrl))
+//            users.append(user)
+//        }
+//
+//        retrievedUsers.append(contentsOf: users)
+//        dataStore.appendUsers(userModels: users)
+//        tableView.reloadData()
+//    }
     
     // MARK: - Navigation
 
@@ -61,8 +62,6 @@ class ViewController: UIViewController {
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if let destinationVC = segue.destination as? UserDetailViewController {
             if let sender = sender as? UserCell {
-//                destinationVC.userAvatarImage.image = sender.userAvatarImage.image
-//                destinationVC.userNameLabel.text = sender.userNameLabel.text
                 destinationVC.image = sender.userAvatarImage.image
                 if let user = sender.getUserModel() {
                     destinationVC.assignUserModel(user: user)
@@ -84,7 +83,9 @@ extension ViewController: LoadUsersCellDelegate {
         print("loading more users")
         if let username = currentSearchQuery, isSearching == true, let page = currentSearchPage {
             currentSearchPage = page + 1
+//            add extra users function to handle more users? then point of synch can be done in
             userListManager.fetchUsers(username: username, page: page + 1)
+            
         }
     }
 }
@@ -134,12 +135,11 @@ extension ViewController: UISearchBarDelegate {
 extension ViewController: UITableViewDelegate {
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-//        code failes when you double click on load more users button hehe
         if let cell = tableView.cellForRow(at: indexPath) as? UserCell {
             performSegue(withIdentifier: "ToUserDetail", sender: cell)
             print("selected row is \(indexPath.row), associated user is: \(retrievedUsers[indexPath.row].userName)")
         }
-//        push new controller modally to show the user details.
+
     }
     
     func tableView(_ tableView: UITableView, willDisplay cell: UITableViewCell, forRowAt indexPath: IndexPath) {
@@ -147,11 +147,16 @@ extension ViewController: UITableViewDelegate {
         //        1. data has been loaded via prefetch request andis ready to be displayed
         //        2. Data is currently being prefetched but is not yet avaliable
         //        3. Data has been not requested.
+        //         4. regardless of that if we are the last cell (ie holding the last user) - we want to page in more users.
+        // this should be called here!
+        
         guard let cell = cell as? UserCell else {
-//            print("Failed to cast cell as userCell in willDisplay method")
             return
         }
-        
+//        if cell.getUserModel() == retrievedUsers.last {
+//        //    start paging in more data?
+//            loadMoreUsers()
+//        }
 //        completion handler for the cell once the data has been loaded
         let updateCellClosure: (UIImage?) -> () = { [unowned self] (image) in
             cell.configureCell(image)
@@ -178,6 +183,7 @@ extension ViewController: UITableViewDelegate {
             }
         }
     }
+    
     func tableView(_ tableView: UITableView, didEndDisplaying cell: UITableViewCell, forRowAt indexPath: IndexPath) {
 //      Cancel and dispose for existing data loaders for cells that did end displaying (maybe ceal dataStore too?
         if let dataLoader = loadingOperations[indexPath] {
@@ -190,15 +196,15 @@ extension ViewController: UITableViewDelegate {
 extension ViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         
-        if retrievedUsers.count == 0 {
-            return 1
-        } else {
+//        if retrievedUsers.count == 0 {
+//            return 1
+//        } else {
             return retrievedUsers.count+1
-        }
+//        }
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        if indexPath.row < retrievedUsers.count {
+        if indexPath.row < retrievedUsers.count{
         let cell = tableView.dequeueReusableCell(withIdentifier: "UserCell", for: indexPath) as! UserCell
         
         if retrievedUsers.count == 0 {

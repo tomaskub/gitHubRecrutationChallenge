@@ -22,6 +22,7 @@
 		D67F0ED928897CDE009385BA /* UserListData.swift in Sources */ = {isa = PBXBuildFile; fileRef = D67F0ED828897CDE009385BA /* UserListData.swift */; };
 		D67F0EDE28897E5C009385BA /* UserModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = D67F0EDD28897E5C009385BA /* UserModel.swift */; };
 		D67F0EE0288C49D1009385BA /* UserCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D67F0EDF288C49D1009385BA /* UserCell.swift */; };
+		D6D642D22892FA0900B6C32A /* SavedUsersTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = D6D642D12892FA0900B6C32A /* SavedUsersTableViewController.swift */; };
 		D6E76309288DB0C0001058E7 /* LoadUsersCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = D6E76308288DB0C0001058E7 /* LoadUsersCell.swift */; };
 /* End PBXBuildFile section */
 
@@ -44,6 +45,7 @@
 		D67F0ED828897CDE009385BA /* UserListData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserListData.swift; sourceTree = "<group>"; };
 		D67F0EDD28897E5C009385BA /* UserModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserModel.swift; sourceTree = "<group>"; };
 		D67F0EDF288C49D1009385BA /* UserCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserCell.swift; sourceTree = "<group>"; };
+		D6D642D12892FA0900B6C32A /* SavedUsersTableViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SavedUsersTableViewController.swift; sourceTree = "<group>"; };
 		D6E76308288DB0C0001058E7 /* LoadUsersCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoadUsersCell.swift; sourceTree = "<group>"; };
 		E0AC2AD0EFB7C17BD2555C03 /* Pods-gitHubRecrutationChallengeTry2.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-gitHubRecrutationChallengeTry2.debug.xcconfig"; path = "Target Support Files/Pods-gitHubRecrutationChallengeTry2/Pods-gitHubRecrutationChallengeTry2.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -82,6 +84,7 @@
 			children = (
 				D67F0EC628897C3C009385BA /* ViewController.swift */,
 				D64DD7FA2892C1E60087DE83 /* UserDetailViewController.swift */,
+				D6D642D12892FA0900B6C32A /* SavedUsersTableViewController.swift */,
 			);
 			path = Controllers;
 			sourceTree = "<group>";
@@ -262,6 +265,7 @@
 				D6E76309288DB0C0001058E7 /* LoadUsersCell.swift in Sources */,
 				D67F0ED728897CC8009385BA /* UserListManager.swift in Sources */,
 				D61647B02892E2E50051F36C /* RealmUserModel.swift in Sources */,
+				D6D642D22892FA0900B6C32A /* SavedUsersTableViewController.swift in Sources */,
 				D67F0ED928897CDE009385BA /* UserListData.swift in Sources */,
 				D667DC60288D6400001E9E37 /* ImageModel.swift in Sources */,
 				D67F0EDE28897E5C009385BA /* UserModel.swift in Sources */,

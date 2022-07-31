@@ -38,6 +38,18 @@ class SavedUsersTableViewController: UIViewController {
         }
         dataStore = ImageDataStore(userModels: retrivedUsers)
     }
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if let destinationVC = segue.destination as? UserDetailViewController {
+            if let sender = sender as? UserCell {
+                destinationVC.image = sender.userAvatarImage.image
+                if let user = sender.getUserModel() {
+                    destinationVC.assignUserModel(user: user)
+                }else {
+                    fatalError("Failed at retrieving user model from the cell")
+                }
+            }
+        }
+    }
 }
 
 extension SavedUsersTableViewController: UITableViewDelegate {
@@ -70,7 +82,11 @@ extension SavedUsersTableViewController: UITableViewDelegate {
             loadingOperations.removeValue(forKey: indexPath)
         }
     }
-    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+//        if let cell = tableView.cellForRow(at: indexPath) as? UserCell {
+//            performSegue(withIdentifier: "ToSavedUserDetails", sender: cell)
+//        }
+    }
 }
 
 extension SavedUsersTableViewController: UITableViewDataSource {

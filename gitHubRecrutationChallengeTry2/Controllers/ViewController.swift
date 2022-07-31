@@ -127,7 +127,7 @@ extension ViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         
         if let cell = tableView.cellForRow(at: indexPath) as? UserCell {
-            performSegue(withIdentifier: "ToUserDetail", sender: cell)
+//            performSegue(withIdentifier: "ToUserDetail", sender: cell)
          }
 
     }

@@ -203,6 +203,7 @@
                                             <outlet property="tipLabel" destination="16F-k7-HgB" id="BFG-9t-uOg"/>
                                             <outlet property="userAvatarImage" destination="kZp-pw-PiW" id="LSB-6W-Gsi"/>
                                             <outlet property="userNameLabel" destination="zkU-4u-ckZ" id="PUh-BT-69C"/>
+                                            <segue destination="Yrn-5I-NrR" kind="presentation" identifier="ToSavedUserDetails" id="4vK-uB-L5M"/>
                                         </connections>
                                     </tableViewCell>
                                 </prototypes>
@@ -299,6 +300,9 @@
             <point key="canvasLocation" x="18.840579710144929" y="97.767857142857139"/>
         </scene>
     </scenes>
+    <inferredMetricsTieBreakers>
+        <segue reference="5xL-MM-Yfl"/>
+    </inferredMetricsTieBreakers>
     <resources>
         <image name="star.fill" catalog="system" width="128" height="116"/>
         <systemColor name="systemBackgroundColor">

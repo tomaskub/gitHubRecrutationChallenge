@@ -225,20 +225,32 @@ extension ViewController: UserDataManagerDelegate {
     }
     
     func didUpdateUsers(_ userListManager: UserListManager, users: [UserModel]) {
+        
+        if self.isSearching == true {
+            var tempUsers: [UserModel] = []
+            for user in users {
+                if !retrievedUsers.contains(where: {$0 == user}) {
+                    tempUsers.append(user)
+                } else {
+                    print("found duplicate user \(user.userName), did not add to retrived user list")
+                }
+            }
+            retrievedUsers.append(contentsOf: tempUsers)
+            self.dataStore.appendUsers(userModels: tempUsers)
+            
+        } else {
+            self.currentSearchPage = 1
+            self.retrievedUsers = users
+            self.dataStore = ImageDataStore(userModels: users)
+            self.isSearching = true
+        }
+        
+        
+        
+        
         DispatchQueue.main.async {
             print("Did updated the users successfully")
-            if self.isSearching == true {
-                self.retrievedUsers.append(contentsOf: users)
-                self.dataStore.appendUsers(userModels: users)
-                self.tableView.reloadData()
-            } else {
-                self.currentSearchPage = 1
-                self.retrievedUsers = users
-                self.dataStore = ImageDataStore(userModels: users)
-                self.isSearching = true
-                self.tableView.reloadData()
-                
-            }
+            self.tableView.reloadData()
         }
         
         

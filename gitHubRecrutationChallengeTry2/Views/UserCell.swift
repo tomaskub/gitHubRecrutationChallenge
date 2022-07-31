@@ -15,6 +15,8 @@ class UserCell: UITableViewCell {
     @IBOutlet weak var userAvatarImage: UIImageView!
     @IBOutlet weak var loadingIndicator: UIActivityIndicatorView!
     
+    @IBOutlet weak var userNameLabelConstraint: NSLayoutConstraint!
+    
     private var userModel: UserModel?
     
     override func awakeFromNib() {
@@ -28,6 +30,9 @@ class UserCell: UITableViewCell {
     func configureCell(user: UserModel){
             userModel = user
             userNameLabel.text = user.userName
+//        userNameLabelConstraint = NSLayoutConstraint(item: userNameLabel, attribute: .leading, relatedBy: .equal, toItem: superview, attribute: .trailing, multiplier: 1, constant: 20)
+        
+//        userNameLabelConstraint.isActive = true
     }
     /// Configure cell image
     /// - Parameter image: UIimage to pass to the cell
@@ -40,9 +45,11 @@ class UserCell: UITableViewCell {
         
     /// Configure cell without username, image, or loading indicator - text to display is "Search of an user or check favorites"
     func configureCell() {
-        userNameLabel.text = "Search for an user or check favorites!"
+//        userNameLabel.text = "Search for an user or check favorites!"
         loadingIndicator.stopAnimating()
         userAvatarImage.image = .none
+//        userNameLabelConstraint = NSLayoutConstraint(item: userNameLabel, attribute: .centerX, relatedBy: .equal, toItem: superview, attribute: .centerX, multiplier: 1, constant: 0)
+//        userNameLabelConstraint.isActive = true
     }
 
     

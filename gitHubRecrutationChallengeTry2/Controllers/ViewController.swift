@@ -6,15 +6,12 @@
 //
 
 import UIKit
-import RealmSwift
+
 
 class ViewController: UIViewController {
     
     @IBOutlet weak var searchBar: UISearchBar!
     @IBOutlet weak var tableView: UITableView!
-    
-    
-    let localRealm = try! Realm()
     
     private lazy var dataStore = ImageDataStore()
     private lazy var loadingQueue = OperationQueue()
@@ -34,27 +31,9 @@ class ViewController: UIViewController {
         tableView.dataSource = self
         tableView.prefetchDataSource = self
         title = "Search Github for users"
+        searchBar.showsCancelButton = true
     }
     
-    
-//    @IBAction func favoritesButtonTapped(_ sender: Any) {
-//        favoritesButton.setTitle("Favourite Users", for: .normal)
-//        retrievedUsers = []
-//        dataStore = ImageDataStore()
-//        loadingQueue = OperationQueue()
-//        loadingOperations = [:]
-//        let array = Array(localRealm.objects(RealmUserModel.self).sorted(byKeyPath: "userName", ascending: true))
-//        var users: [UserModel] = []
-//
-//        for item in array {
-//            let user = UserModel(userName: item.userName, avatarUrl: item.avatarUrl, imageModel: ImageModel(url: item.avatarUrl))
-//            users.append(user)
-//        }
-//
-//        retrievedUsers.append(contentsOf: users)
-//        dataStore.appendUsers(userModels: users)
-//        tableView.reloadData()
-//    }
     
     // MARK: - Navigation
 
@@ -71,7 +50,6 @@ class ViewController: UIViewController {
             }
             
         }
-        // Pass the selected object to the new view controller.
     }
     
 
@@ -79,6 +57,7 @@ class ViewController: UIViewController {
 }
 
 extension ViewController: LoadUsersCellDelegate {
+    
     func loadMoreUsers() {
         print("loading more users")
         if let username = currentSearchQuery, isSearching == true, let page = currentSearchPage {
@@ -129,16 +108,27 @@ extension ViewController: UISearchBarDelegate {
         }
         searchBar.resignFirstResponder()
     }
+    func searchBarCancelButtonClicked(_ searchBar: UISearchBar) {
+//        delete user list
+//        cancel all of the requests
+        print(" search bar cancel button clicked")
+        retrievedUsers.removeAll()
+        self.dataStore = ImageDataStore()
+        loadingQueue.cancelAllOperations()
+        loadingOperations.removeAll()
+        tableView.reloadData()
+        
+    }
 }
 
 // MARK: -table view delegate
 extension ViewController: UITableViewDelegate {
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        
         if let cell = tableView.cellForRow(at: indexPath) as? UserCell {
             performSegue(withIdentifier: "ToUserDetail", sender: cell)
-            print("selected row is \(indexPath.row), associated user is: \(retrievedUsers[indexPath.row].userName)")
-        }
+         }
 
     }
     
@@ -205,24 +195,26 @@ extension ViewController: UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         if indexPath.row < retrievedUsers.count{
-        let cell = tableView.dequeueReusableCell(withIdentifier: "UserCell", for: indexPath) as! UserCell
-        
-        if retrievedUsers.count == 0 {
-            cell.configureCell()
-            return cell
-        } else {
-        cell.configureCell(user: retrievedUsers[indexPath.row])
+            let cell = tableView.dequeueReusableCell(withIdentifier: "UserCell", for: indexPath) as! UserCell
+            cell.configureCell(user: retrievedUsers[indexPath.row])
         return cell
-        }
+        
         } else {
-            let cell = tableView.dequeueReusableCell(withIdentifier: "LoadUsersCell", for: indexPath) as! LoadUsersCell
-            cell.delegate = self
-            return cell
+            
+            if retrievedUsers.count == 0 {
+                let cell = tableView.dequeueReusableCell(withIdentifier: "UserCell", for: indexPath) as! UserCell
+                cell.configureCell()
+                return cell
+            } else {
+                let cell = tableView.dequeueReusableCell(withIdentifier: "LoadUsersCell", for: indexPath) as! LoadUsersCell
+                cell.delegate = self
+                return cell
+            }
         }
         
     }
-    
 }
+
 
 extension ViewController: UserDataManagerDelegate {
     func didFailWithErrors(error: Error) {

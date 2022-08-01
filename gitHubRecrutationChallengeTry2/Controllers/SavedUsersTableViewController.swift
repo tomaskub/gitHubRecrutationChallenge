@@ -8,7 +8,16 @@
 import UIKit
 import RealmSwift
 
-class SavedUsersTableViewController: UIViewController {
+class SavedUsersTableViewController: UIViewController, UserDetailViewControllerDelegate {
+    func userRemovedFromFavorites(userModel: UserModel) {
+        getSavedUsers()
+        tableView.reloadData()
+    }
+    
+    func userAddedToFavorites() {
+        getSavedUsers()
+        tableView.reloadData()
+    }
     
     @IBOutlet weak var tableView: UITableView!
     
@@ -23,14 +32,17 @@ class SavedUsersTableViewController: UIViewController {
     override func viewDidLoad() {
         title = "Saved Users"
         super.viewDidLoad()
-//        tableView.register(UserCell.self, forCellReuseIdentifier: "UserCell")
         tableView.delegate = self
         tableView.dataSource = self
         tableView.prefetchDataSource = self
         getSavedUsers()
         tableView.reloadData()
     }
+   
     func getSavedUsers() {
+        loadingQueue.cancelAllOperations()
+        loadingOperations.removeAll()
+        retrivedUsers = []
         let array = Array(localRealm.objects(RealmUserModel.self).sorted(byKeyPath: "userName", ascending: true))
         for realmUser in array {
             let user = UserModel(realmUserModel: realmUser)
@@ -38,12 +50,15 @@ class SavedUsersTableViewController: UIViewController {
         }
         dataStore = ImageDataStore(userModels: retrivedUsers)
     }
+    
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         if let destinationVC = segue.destination as? UserDetailViewController {
             if let sender = sender as? UserCell {
                 destinationVC.image = sender.userAvatarImage.image
+                destinationVC.delegate = self
                 if let user = sender.getUserModel() {
                     destinationVC.assignUserModel(user: user)
+                    
                 }else {
                     fatalError("Failed at retrieving user model from the cell")
                 }
@@ -94,13 +109,18 @@ extension SavedUsersTableViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return retrivedUsers.count
     }
+    
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        
         let cell = tableView.dequeueReusableCell(withIdentifier: "SavedUserCell", for: indexPath) as! UserCell
+        
         cell.configureCell(user: retrivedUsers[indexPath.row])
+        
         let updateCellClosure: (UIImage?) -> () = { [unowned self] (image) in
             cell.configureCell(image)
             self.loadingOperations.removeValue(forKey: indexPath)
         }
+        
         if let dataLoader = loadingOperations[indexPath] {
             if let image = dataLoader.image {
                 cell.configureCell(image)

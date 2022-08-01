@@ -8,6 +8,11 @@
 import UIKit
 import RealmSwift
 
+protocol UserDetailViewControllerDelegate {
+    func userAddedToFavorites()
+    func userRemovedFromFavorites(userModel: UserModel)
+}
+
 class UserDetailViewController: UIViewController {
 
     @IBOutlet weak var userNameLabel: UILabel!
@@ -18,6 +23,7 @@ class UserDetailViewController: UIViewController {
     let localRealm = try! Realm()
     
     private var userModel: UserModel?
+    var delegate: UserDetailViewControllerDelegate?
     var image: UIImage?
     private var isUserFavorite: Bool?
     
@@ -65,6 +71,7 @@ class UserDetailViewController: UIViewController {
                     let user = RealmUserModel(value: ["userName": userModel.userName, "avatarUrl": userModel.avatarUrl])
                     localRealm.add(user)
                 })
+                delegate?.userAddedToFavorites()
             } else {
                 configureViewFor(_isUserFavorite: false)
                 try! localRealm.write({
@@ -72,6 +79,7 @@ class UserDetailViewController: UIViewController {
                         $0.userName == userModel.userName})
                     localRealm.delete(user)
                 })
+                delegate?.userRemovedFromFavorites(userModel: userModel)
             }
         }
         

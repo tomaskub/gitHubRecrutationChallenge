@@ -197,6 +197,7 @@ extension ViewController: UITableViewDataSource {
         if indexPath.row < retrievedUsers.count{
             let cell = tableView.dequeueReusableCell(withIdentifier: "UserCell", for: indexPath) as! UserCell
             cell.configureCell(user: retrievedUsers[indexPath.row])
+            cell.isUserInteractionEnabled = true
         return cell
         
         } else {
@@ -204,9 +205,11 @@ extension ViewController: UITableViewDataSource {
             if retrievedUsers.count == 0 {
                 let cell = tableView.dequeueReusableCell(withIdentifier: "UserCell", for: indexPath) as! UserCell
                 cell.configureCell()
+                cell.isUserInteractionEnabled = false
                 return cell
             } else {
                 let cell = tableView.dequeueReusableCell(withIdentifier: "LoadUsersCell", for: indexPath) as! LoadUsersCell
+                cell.isUserInteractionEnabled = true
                 cell.delegate = self
                 return cell
             }

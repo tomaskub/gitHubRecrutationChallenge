@@ -60,7 +60,12 @@ class ImageDataStore {
         
         }
     }
-    
+    public func removeUser(userModels: [UserModel]){
+        for userModel in userModels {
+            images?.removeAll(where: {$0.url == URL(string: userModel.avatarUrl)})
+        }
+        
+    }
     public var numberOfImage: Int {
         if let images = images {
             return images.count

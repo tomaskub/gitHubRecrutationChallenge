@@ -15,12 +15,13 @@ class UserCell: UITableViewCell {
     @IBOutlet weak var userAvatarImage: UIImageView!
     @IBOutlet weak var loadingIndicator: UIActivityIndicatorView!
     @IBOutlet weak var tipLabel: UILabel!
-    @IBOutlet weak var userNameLabelConstraint: NSLayoutConstraint!
+    
     
     private var userModel: UserModel?
     
     override func awakeFromNib() {
         super.awakeFromNib()
+        self.userAvatarImage.translatesAutoresizingMaskIntoConstraints = false
     }
     
     override func setSelected(_ selected: Bool, animated: Bool) {
@@ -36,7 +37,6 @@ class UserCell: UITableViewCell {
     /// Configure cell image
     /// - Parameter image: UIimage to pass to the cell
     func configureCell(_ image: UIImage?) {
-//        why unowned self?
         DispatchQueue.main.async { [unowned self] in
             self.displayImage(image)
         }

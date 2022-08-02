@@ -30,6 +30,8 @@ class LoadUsersCell: UITableViewCell {
         loadMoreUsersButton.isHidden = false
     }
     
+    /// Call cell delegate to load more users from current active search and display loading indicator
+    /// - Parameter sender: UIButton
     @IBAction func loadMoreUsersButtonTapped(_ sender: Any) {
         activityIndicator.startAnimating()
         loadMoreUsersButton.isHidden = true

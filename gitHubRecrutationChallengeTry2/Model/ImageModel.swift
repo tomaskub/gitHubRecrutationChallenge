@@ -10,14 +10,10 @@ import Foundation
 struct ImageModel {
     
     public private(set) var url: URL?
-//    let order: Int
     
     init(url: String?) {
         if let urlString = url {
             self.url = URL(string: urlString)
         }
-//        self.order = order
-        
-        
     }
 }

@@ -32,20 +32,18 @@ class UserDetailViewController: UIViewController {
         
         if let userModel = userModel {
             userNameLabel.text = userModel.userName
-            
             let results = localRealm.objects(RealmUserModel.self).where({
                 $0.userName == userModel.userName
             })
-            
             configureViewFor(_isUserFavorite: !results.isEmpty)
         }
+        
         if let _image = image {
             userAvatarImage.image = _image
         }
-        
-        // Do any additional setup after loading the view.
     }
-    func configureViewFor(_isUserFavorite: Bool){
+    
+    private func configureViewFor(_isUserFavorite: Bool){
         if _isUserFavorite {
             isUserFavorite = true
             saveAsFavButton.setTitle("Remove from favorites", for: .normal)
@@ -56,15 +54,15 @@ class UserDetailViewController: UIViewController {
             saveAsFavButton.setImage(UIImage(systemName: "star"), for: .normal)
         }
     }
-    func setForFavoriteUser() {
-        
+    
+    func assignUserData(user: UserModel, image: UIImage) {
+        self.userModel = user
+        self.image = image
     }
     
-    func assignUserModel(user: UserModel) {
-        self.userModel = user
-    }
     @IBAction func saveToFavoriteTouched(_ sender: Any) {
         if let userModel = userModel, let _isUserFavorite = isUserFavorite {
+            
             if !_isUserFavorite {
                 configureViewFor(_isUserFavorite: true)
                 try! localRealm.write({
@@ -84,15 +82,4 @@ class UserDetailViewController: UIViewController {
         }
         
     }
-    
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
-    }
-    */
-
 }

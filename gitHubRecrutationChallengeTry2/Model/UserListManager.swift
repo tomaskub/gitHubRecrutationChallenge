@@ -11,22 +11,9 @@ protocol UserDataManagerDelegate {
     func didFailWithErrors(error: Error)
 }
 
-// this have to have point of synchronisation implementation
-//what to do with extra users that are dupes since new user was done?
-// Filer the users and check if someone already is on a already retrieved list?
-// use dictionary for the users with usernames?
-
-
 struct UserListManager {
     
     var delegate: UserDataManagerDelegate?
-    enum state {
-        case working
-        case free
-    }
-        
-    var busyState: state = .free
-    
     let userDatabaseURL = "https://api.github.com/"
     let userDatabasePathURL = "search/users"
     let query = "?q="
@@ -43,39 +30,31 @@ struct UserListManager {
         if let page = page {
             urlString.append(pageParamter)
             urlString.append(String(page))
-//            if let perPage = perPage {
                 urlString.append(perPageParameter)
                 urlString.append(String(perPage))
-//            }
         }
-        
-        print(urlString)
         performRequest(with: urlString)
     }
+    
     func performRequest(with urlString: String){
         if let url = URL(string: urlString) {
             let session = URLSession(configuration: .default)
-            let task = session.dataTask(with: url) {
-                (data, response, error) in
+            let task = session.dataTask(with: url) { (data, response, error) in
 
                 if let response = response as? HTTPURLResponse {
                     print(response.statusCode)
                 }
                 if error != nil {
                     self.delegate?.didFailWithErrors(error: error!)
-//                    busyState = .free
                     return
                 }
                 if let safeData = data {
                     if let userData = self.parseJSONtoUserModel(safeData){
                         self.delegate?.didUpdateUsers(self, users: userData)
-//                        busyState = .free
                     }
                 }
             }
             task.resume()
-//            busyState = .working
-            
         } else {
             fatalError("URL failed to start task")
         }
